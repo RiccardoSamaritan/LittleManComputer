@@ -1,0 +1,42 @@
+        // Input: numero di righe della serie di Newton
+        inp          // Leggi il numero di righe (N)
+        sta ROWS     // Salva il numero di righe in ROWS
+
+INIT    lda ZERO     // Inizializza il valore iniziale (C(n, 0) = 1)
+        sta CURRENT  // Salva il valore iniziale per la riga
+        out          // Stampa il primo valore (1)
+        lda ROWS     // Controlla se sono state calcolate tutte le righe
+        brz END      // Se ROWS è 0, termina il programma
+
+        sta REMAIN   // Salva il numero di valori da calcolare per la riga
+
+NEXT    lda CURRENT  // Carica il valore corrente (C(n, k))
+        add PREV     // Somma il valore precedente
+        sta TEMP     // Salva il valore temporaneo (C(n+1, k))
+        out          // Stampa il valore (C(n+1, k))
+        lda CURRENT  // Sposta CURRENT in PREV
+        sta PREV     // Aggiorna PREV
+        lda TEMP     // Aggiorna CURRENT
+        sta CURRENT  
+
+        lda REMAIN   // Decrementa il contatore di valori rimanenti
+        sub ONE      
+        sta REMAIN   
+        brz NEXT_ROW // Passa alla riga successiva se REMAIN = 0
+        bra NEXT     // Continua a calcolare la riga corrente
+
+NEXT_ROW lda ROWS    // Decrementa il numero di righe rimanenti
+        sub ONE
+        sta ROWS
+        bra INIT     // Ripeti per la riga successiva
+
+END     hlt          // Termina il programma
+
+// Memoria utilizzata
+ZERO    dat 0        // Valore iniziale "0"
+ONE     dat 1        // Valore "1"
+ROWS    dat          // Numero di righe rimanenti
+REMAIN  dat          // Numero di valori rimanenti nella riga corrente
+CURRENT dat          // Valore corrente (C(n, k))
+PREV    dat          // Valore precedente (C(n, k-1))
+TEMP    dat          // Valore temporaneo per il calcolo

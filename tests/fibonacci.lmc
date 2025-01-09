@@ -1,0 +1,37 @@
+         // Input: numero di termini della sequenza di Fibonacci
+        inp          // Leggi il numero di termini desiderati (N)
+        sta COUNT    // Salva N in COUNT
+        
+        lda ZERO     // Inizializza il primo valore di Fibonacci (F1 = 0)
+        sta FIRST    // Memorizza F1
+        lda ONE      // Inizializza il secondo valore di Fibonacci (F2 = 1)
+        sta SECOND   // Memorizza F2
+
+LOOP    brz END      // Se COUNT è 0, termina il ciclo
+        lda FIRST    // Carica F1
+        out          // Stampa F1
+        lda SECOND   // Carica F2
+        add FIRST    // Calcola F3 = F1 + F2
+        sta RESULT   // Salva F3 in RESULT
+
+        lda SECOND   // Sposta F2 in F1
+        sta FIRST    // Aggiorna F1
+        lda RESULT   // Sposta F3 in F2
+        sta SECOND   // Aggiorna F2
+
+        lda COUNT    // Decrementa il contatore N
+        sub ONE
+        sta COUNT    // Salva il nuovo valore di COUNT
+        bra LOOP     // Ripeti il ciclo
+
+END     hlt          // Termina il programma
+
+// Memoria utilizzata
+ZERO    dat 0        // Valore iniziale "0"
+ONE     dat 1        // Valore "1"
+FIRST   dat          // Primo numero di Fibonacci (F1)
+SECOND  dat          // Secondo numero di Fibonacci (F2)
+RESULT  dat          // Somma di F1 e F2 (F3)
+COUNT   dat          // Numero di termini rimanenti da calcolare
+
+
